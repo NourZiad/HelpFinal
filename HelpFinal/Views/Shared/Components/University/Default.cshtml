@@ -1,0 +1,31 @@
+﻿@model IEnumerable<University>
+
+
+<!-- Service Start -->
+<div class="service">
+    <div class="container">
+        <div class="section-header text-center">
+            <p>Where You Can Find Us?</p>
+            <h2>We believe that we can save more time with you</h2>
+        </div>
+        <div class="row">
+          @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="flaticon-education"></i>
+                        </div>
+                        <div class="service-text">
+                            <h3>@item.UniName</h3>
+                            <p>@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            
+        </div>
+    </div>
+</div>
+<!-- Service End -->
