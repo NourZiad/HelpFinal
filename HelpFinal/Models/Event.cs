@@ -20,11 +20,15 @@ namespace HelpFinal.Models
         public string? TxtLink { get; set; }
 
         public string? UrlLink { get; set; }
-        [Required(ErrorMessage = "Enter  Date Event")]
 
-        public DateTime? Date { get; set; }
-        [Required(ErrorMessage = "Enter Time Event")]
+        [Required(ErrorMessage = "Enter Event Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime Date { get; set; }
 
-        public DateTime? Time { get; set; }
+        [Required(ErrorMessage = "Enter Event Time")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:hh:mm }", ApplyFormatInEditMode = true)]
+        public DateTime Time { get; set; }
     }
 }

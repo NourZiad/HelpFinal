@@ -1,0 +1,52 @@
+﻿@model IEnumerable<About>
+
+<!-- About Start -->
+<div class="about">
+
+
+    @foreach (var item in Model)
+    {
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="about-img" data-parallax="scroll" data-image-src="@Url.Content(item.Image)"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="section-header">
+                        <p>@item.Title</p>
+                        <h2>@item.SubTitle</h2>
+                    </div>
+                    <div class="about-tab">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#tab-content-1">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#tab-content-2">Mission</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#tab-content-3">Vision</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="tab-content-1" class="container tab-pane active">
+                                @item.AboutUs
+                            </div>
+                            <div id="tab-content-2" class="container tab-pane fade">
+                                @item.Mision
+                            </div>
+                            <div id="tab-content-3" class="container tab-pane fade">
+                                @item.Vision
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    }
+
+        </div>
+
+<!-- About End -->

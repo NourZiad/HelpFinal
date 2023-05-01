@@ -15,6 +15,7 @@ namespace HelpFinal.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<About> Abouts { get; set; }
         public DbSet<University> Universities { get; set; }
     }
 }

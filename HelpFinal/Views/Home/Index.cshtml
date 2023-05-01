@@ -1,5 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@await Component.InvokeAsync("About")
 @await Component.InvokeAsync("University")
+@await Component.InvokeAsync("Event")
+@await Component.InvokeAsync("Testimonial")
+@await Component.InvokeAsync("Contact")

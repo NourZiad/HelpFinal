@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Testimonial>
+
+
+<!-- Testimonial Start -->
+<div class="testimonial">
+    <div class="container">
+        <div class="section-header text-center">
+            <p>Testimonial</p>
+            <h2>What people are talking about our charity activities</h2>
+        </div>
+        <div class="owl-carousel testimonials-carousel">
+             @foreach (var item in Model)
+            {
+                <div class="testimonial-item">
+                    <div class="testimonial-profile">
+                        <img src="@Url.Content(item.Image) alt="Image">
+                        <div class="testimonial-name">
+                            <h3>@item.TestimonialName</h3>
+                            <p>@item.Collage</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-text">
+                        <p>
+                            @item.TestimonialDesc
+                        </p>
+                    </div>
+                </div>
+            }           
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->

@@ -13,7 +13,7 @@ namespace HelpFinal.ViewComponents
         }
          public IViewComponentResult Invoke()
         {
-            var data = db.Universities.OrderByDescending(x => x.UserId).Take(6);
+            var data = db.Universities.OrderByDescending(x => x.UniversityId).Take(6);
             return View(data);
         }
     }
