@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HelpFinal.Data;
 using HelpFinal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HelpFinal.Areas.Administrator.Controllers
 {
     [Area("Administrator")]
+    [Authorize]
     public class UniversitiesController : Controller
     {
         private readonly FinalDbContext _context;
