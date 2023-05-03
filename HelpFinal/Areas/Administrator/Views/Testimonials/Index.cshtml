@@ -1,0 +1,77 @@
+﻿@model IEnumerable<HelpFinal.Models.Testimonial>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TestimonialName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Collage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TestimonialDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPublished)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestimonialName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Collage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestimonialDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPublished)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TestimonialId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TestimonialId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TestimonialId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

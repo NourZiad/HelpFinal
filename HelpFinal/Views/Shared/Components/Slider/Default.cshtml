@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Slider>
+
+<!-- Carousel Start -->
+<div class="carousel">
+    <div class="container-fluid">
+        <div class="owl-carousel">
+              @foreach (var item in Model)
+            {
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="@Url.Content(item.SliderImg)" alt="Image">
+                    </div>
+                    <div class="carousel-text">
+                        <h1>@item.SliderTitle</h1>
+                        <p>
+                            @item.SliderSubTitle
+                        </p>
+                        <div class="carousel-btn">
+                            <a class="btn btn-custom" asp-action="Register" asp-controller="Account"> Become a Member Today </a>
+                            <a class="btn btn-custom" asp-action="Login" asp-controller="Account"> Login </a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
