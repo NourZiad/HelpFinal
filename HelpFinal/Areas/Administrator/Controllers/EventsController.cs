@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HelpFinal.Data;
 using HelpFinal.Models;
+using HelpFinal.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace HelpFinal.Areas.Administrator.Controllers
@@ -16,16 +17,17 @@ namespace HelpFinal.Areas.Administrator.Controllers
     public class EventsController : Controller
     {
         private readonly FinalDbContext _context;
-
-        public EventsController(FinalDbContext context)
+        private IWebHostEnvironment _webHostEnvironment;
+        public EventsController(FinalDbContext context,IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Administrator/Events
         public async Task<IActionResult> Index()
         {
-              return _context.Events != null ? 
+              return _context.Events.Where(x=>x.IsDeleted==false) != null ? 
                           View(await _context.Events.ToListAsync()) :
                           Problem("Entity set 'FinalDbContext.Events'  is null.");
         }
@@ -59,15 +61,31 @@ namespace HelpFinal.Areas.Administrator.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,EventTitle,EventDesc,EventImg,EventLocation,TxtLink,UrlLink,Date,Time,CreationDate,IsPublished,IsDeleted,UserId")] Event @event)
+        public async Task<IActionResult> Create( EventViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
+                string ImgName = UploadFile(model);
+                Event @event = new Event {
+                 EventId = model.EventId,
+                 EventTitle = model.EventTitle,
+                 Time = model.Time,
+                 TxtLink = model.TxtLink,
+                 Date = model.Date,
+                 EventDesc = model.EventDesc,
+                 EventLocation = model.EventLocation,
+                 UrlLink = model.UrlLink,
+                 CreationDate = model.CreationDate,
+                 IsDeleted = model.IsDeleted,
+                 IsPublished = model.IsPublished,
+                 UserId = model.UserId,
+                 EventImg = ImgName
+                };
+                _context.Events.Add(@event);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            return View(model);
         }
 
         // GET: Administrator/Events/Edit/5
@@ -86,9 +104,6 @@ namespace HelpFinal.Areas.Administrator.Controllers
             return View(@event);
         }
 
-        // POST: Administrator/Events/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EventId,EventTitle,EventDesc,EventImg,EventLocation,TxtLink,UrlLink,Date,Time,CreationDate,IsPublished,IsDeleted,UserId")] Event @event)
@@ -162,5 +177,57 @@ namespace HelpFinal.Areas.Administrator.Controllers
         {
           return (_context.Events?.Any(e => e.EventId == id)).GetValueOrDefault();
         }
+
+        public string UploadFile(EventViewModel model)
+        {
+            string wwwPath = _webHostEnvironment.WebRootPath;
+            if (string.IsNullOrEmpty(wwwPath)) { }
+            string ContentPath = _webHostEnvironment.ContentRootPath;
+            if (string.IsNullOrEmpty(ContentPath)) { }
+            string p = Path.Combine(wwwPath, "Images");
+            if (!Directory.Exists(p))
+            {
+                Directory.CreateDirectory(p);
+            }
+            string fileName = Path.GetFileNameWithoutExtension(model.EventImg!.FileName);
+            string newImgName = "nextwo_" + fileName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(model.EventImg.FileName);
+            using (FileStream file = new FileStream(Path.Combine(p,newImgName),FileMode.Create))
+            {
+                model.EventImg.CopyTo(file);
+            }
+            return "\\Images\\" + newImgName;
+        }
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            var data = _context.Events.Find(id);
+            if (id != data!.EventId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    data.IsDeleted = true;
+                    _context.Events.Update(data);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EventExists(data.EventId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

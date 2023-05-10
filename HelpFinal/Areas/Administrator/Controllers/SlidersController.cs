@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HelpFinal.Data;
 using HelpFinal.Models;
 using Microsoft.AspNetCore.Authorization;
+using HelpFinal.Models.ViewModels;
 
 namespace HelpFinal.Areas.Administrator.Controllers
 {
@@ -16,16 +17,17 @@ namespace HelpFinal.Areas.Administrator.Controllers
     public class SlidersController : Controller
     {
         private readonly FinalDbContext _context;
-
-        public SlidersController(FinalDbContext context)
+        private IWebHostEnvironment _webHostEnvironment;
+        public SlidersController(FinalDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Administrator/Sliders
         public async Task<IActionResult> Index()
         {
-              return _context.Sliders != null ? 
+              return _context.Sliders.Where(x=>x.IsDeleted==false) != null ? 
                           View(await _context.Sliders.ToListAsync()) :
                           Problem("Entity set 'FinalDbContext.Sliders'  is null.");
         }
@@ -54,16 +56,27 @@ namespace HelpFinal.Areas.Administrator.Controllers
             return View();
         }
 
-        // POST: Administrator/Sliders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SliderId,SliderTitle,SliderSubTitle,TxtLink,UrlLink,SliderImg,CreationDate,IsPublished,IsDeleted,UserId")] Slider slider)
+        public async Task<IActionResult> Create( SliderViewModel slider)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(slider);
+                string ImgName =  UploadFile(slider);
+                Slider s = new Slider { 
+                  SliderId= slider.SliderId,
+                  SliderTitle=slider.SliderTitle,
+                  SliderSubTitle=slider.SliderSubTitle,
+                  TxtLink=slider.TxtLink,
+                  UrlLink=slider.UrlLink,
+                  CreationDate=slider.CreationDate,
+                  IsDeleted=slider.IsDeleted,
+                  IsPublished=slider.IsPublished,
+                  UserId=slider.UserId,
+                  SliderImg=ImgName
+                
+                };
+                _context.Sliders.Add(s);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -161,6 +174,57 @@ namespace HelpFinal.Areas.Administrator.Controllers
         private bool SliderExists(int id)
         {
           return (_context.Sliders?.Any(e => e.SliderId == id)).GetValueOrDefault();
+        }
+
+        public string UploadFile(SliderViewModel model)
+        {
+            string wwwPath = _webHostEnvironment.WebRootPath;
+            if (string.IsNullOrEmpty(wwwPath)) { }
+            string ContentPath = _webHostEnvironment.ContentRootPath;
+            if (string.IsNullOrEmpty(ContentPath)) { }
+            string p = Path.Combine(wwwPath, "Images");
+            if (!Directory.Exists(p))
+            {
+                Directory.CreateDirectory(p);
+            }
+            string fileName = Path.GetFileNameWithoutExtension(model.SliderImg!.FileName);
+            string newImgName = "nextwo_" + fileName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(model.SliderImg.FileName);
+            using (FileStream file = new FileStream(Path.Combine(p, newImgName), FileMode.Create))
+            {
+                model.SliderImg.CopyTo(file);
+            }
+            return "\\Images\\" + newImgName;
+        }
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            var data = _context.Sliders.Find(id);
+            if (id != data!.SliderId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    data.IsDeleted = true;
+                    _context.Sliders.Update(data);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SliderExists(data.SliderId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

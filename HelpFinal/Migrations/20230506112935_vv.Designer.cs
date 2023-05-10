@@ -4,6 +4,7 @@ using HelpFinal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HelpFinal.Migrations
 {
     [DbContext(typeof(FinalDbContext))]
-    partial class FinalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230506112935_vv")]
+    partial class vv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +65,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("AboutId");
 
-                    b.ToTable("Abouts", (string)null);
+                    b.ToTable("Abouts");
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Contact", b =>
@@ -101,7 +104,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("ContactId");
 
-                    b.ToTable("Contacts", (string)null);
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Event", b =>
@@ -153,7 +156,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("EventId");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Fact", b =>
@@ -184,7 +187,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("FactId");
 
-                    b.ToTable("Facts", (string)null);
+                    b.ToTable("Facts");
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Menu", b =>
@@ -218,7 +221,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("MenuId");
 
-                    b.ToTable("Menus", (string)null);
+                    b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Slider", b =>
@@ -261,7 +264,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("SliderId");
 
-                    b.ToTable("Sliders", (string)null);
+                    b.ToTable("Sliders");
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Testimonial", b =>
@@ -301,7 +304,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("TestimonialId");
 
-                    b.ToTable("Testimonials", (string)null);
+                    b.ToTable("Testimonials");
                 });
 
             modelBuilder.Entity("HelpFinal.Models.University", b =>
@@ -334,7 +337,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("UniversityId");
 
-                    b.ToTable("Universities", (string)null);
+                    b.ToTable("Universities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

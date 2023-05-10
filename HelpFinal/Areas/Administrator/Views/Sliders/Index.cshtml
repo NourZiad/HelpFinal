@@ -18,27 +18,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.SliderSubTitle)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TxtLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UrlLink)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.SliderImg)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPublished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -51,31 +35,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SliderSubTitle)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.TxtLink)
+                <img width="150px" src="@Url.Content(item.SliderImg)">
             </td>
+           
             <td>
-                @Html.DisplayFor(modelItem => item.UrlLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SliderImg)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPublished)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SliderId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SliderId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SliderId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.SliderId" class="btn btn-success">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SliderId" class="btn btn-default" >Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SliderId" class="btn btn-danger">Delete</a> |
+                    <a asp-action="SoftDelete" asp-route-id="@item.SliderId" class="btn btn-warning">Soft Delete</a>
             </td>
         </tr>
 }

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Fact>
+
+<!-- Facts Start -->
+<div class="facts" data-parallax="scroll" data-image-src="~/img/facts.jpg">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <div class="facts-item">
+                        <i class="flaticon-home"></i>
+                        <div class="facts-text">
+                            <h3 class="facts-plus" data-toggle="counter-up">@item.Number</h3>
+                            <p>@item.Name</p>
+                        </div>
+                    </div>
+                </div>
+            }
+       
+        </div>
+    </div>
+</div>
+<!-- Facts End -->

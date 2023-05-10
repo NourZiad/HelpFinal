@@ -25,5 +25,8 @@ namespace HelpFinal.Models.ViewModels
         [DataType(DataType.Password)]
         [Compare("Password",ErrorMessage ="Password is not Match!")]
         public string? ConfirmPassword { get; set; }
+
+        public bool Volunteer { get; set; }
+        public bool NeedHelp { get; set; }
     }
 }

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HelpFinal.Data;
 using HelpFinal.Models;
 using Microsoft.AspNetCore.Authorization;
+using HelpFinal.ViewComponents;
+using HelpFinal.Models.ViewModels;
 
 namespace HelpFinal.Areas.Administrator.Controllers
 {
@@ -54,16 +56,27 @@ namespace HelpFinal.Areas.Administrator.Controllers
             return View();
         }
 
-        // POST: Administrator/Contacts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,Name,Email,Subject,Message,CreationDate,IsPublished,IsDeleted,UserId")] Contact contact)
+        public async Task<IActionResult> Create( ContactViewModel contact)
         {
+
             if (ModelState.IsValid)
             {
-                _context.Add(contact);
+                Contact c = new Contact { 
+                ContactId = contact.ContactId,
+                Email = contact.Email,
+                Name=contact.Name,
+                Subject=contact.Subject,
+                Message=contact.Message,
+                CreationDate = contact.CreationDate,
+                IsDeleted=contact.IsDeleted,
+                IsPublished = contact.IsPublished,
+                UserId = contact.UserId
+                
+                };
+                _context.Contacts.Add(c);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -161,6 +174,37 @@ namespace HelpFinal.Areas.Administrator.Controllers
         private bool ContactExists(int id)
         {
           return (_context.Contacts?.Any(e => e.ContactId == id)).GetValueOrDefault();
+        }
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            var data = _context.Contacts.Find(id);
+            if (id != data!.ContactId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    data.IsDeleted = true;
+                    _context.Contacts.Update(data);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ContactExists(data.ContactId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

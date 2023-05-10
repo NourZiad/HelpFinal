@@ -17,5 +17,6 @@ namespace HelpFinal.Data
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<About> Abouts { get; set; }
         public DbSet<University> Universities { get; set; }
+        public DbSet<Fact> Facts { get; set; }
     }
 }
