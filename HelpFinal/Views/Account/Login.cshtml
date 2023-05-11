@@ -1,13 +1,82 @@
 ﻿@model HelpFinal.Models.ViewModels.LoginViewModel
 
 @{
-    ViewData["Title"] = "Login";
+	ViewData["Title"] = "Login";
+	Layout = null;
 }
+<!-- Bootstrap core CSS -->
+<link href="~/assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="~/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
-<h1>Login</h1>
+<!-- Custom styles for this template -->
+<link href="~/assets/css/style.css" rel="stylesheet">
+<link href="~/assets/css/style-responsive.css" rel="stylesheet">
 
 
-<hr />
+
+
+
+<div id="login-page">
+	<div class="container">
+
+		<form class="form-login" asp-action="Login">
+			<h2 class="form-login-heading">sign in now</h2>
+			<div class="login-wrap">
+				<input type="text" class="form-control" placeholder="User ID" autofocus>
+				<br>
+				<input type="password" class="form-control" placeholder="Password">
+				<label class="checkbox">
+					<span class="pull-right">
+						<a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
+
+					</span>
+				</label>
+				<button class="btn btn-theme btn-block" asp-action="Index" asp-controller="Dashboard", {area="Administrator"}" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+				<hr>
+
+				<div class="login-social-link centered">
+					<p>or you can sign in via your social network</p>
+					<button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
+					<button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
+				</div>
+				<div class="registration">
+					Don't have an account yet?<br />
+					<a class=""asp-action="Register" asp-controller="Account">
+						Create an account
+					</a>
+				</div>
+
+			</div>
+
+			<!-- Modal -->
+			<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Forgot Password ?</h4>
+						</div>
+						<div class="modal-body">
+							<p>Enter your e-mail address below to reset your password.</p>
+							<input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+
+						</div>
+						<div class="modal-footer">
+							<button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+							<button class="btn btn-theme" type="button">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- modal -->
+
+		</form>
+
+	</div>
+</div>
+
+@*
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Login">
@@ -28,8 +97,7 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Register">Register</a>
 </div>
-
+*@

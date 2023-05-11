@@ -2,21 +2,87 @@
 
 @{
     ViewData["Title"] = "Register";
+	Layout = null;
 }
 
-<h1>Register</h1>
 
 
-<hr />
+
+<!-- Bootstrap core CSS -->
+<link href="~/assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="~/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="~/assets/css/style.css" rel="stylesheet">
+<link href="~/assets/css/style-responsive.css" rel="stylesheet">
+
+
+
+
+
+<div id="login-page">
+	<div class="container">
+
+		<form class="form-login" asp-action="Register">
+			<h2 class="form-login-heading">sign up now</h2>
+			<div class="login-wrap">
+				<input asp-for="Name" class="form-control" placeholder="User ID" autofocus>
+				<br>
+				<input asp-for="Email" class="form-control" placeholder="Email">
+				<br>
+				<input asp-for="Phone" class="form-control" placeholder="Phone">
+				<br>
+				<input asp-for="Password" class="form-control" placeholder="Password">
+				<br>
+				<input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password">
+				<br />
+		
+				<button class="btn btn-theme btn-block" asp-action="Index" asp-controller="Dashboard" , {area="Administrator" }" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+				<hr>
+
+				<div class="registration">
+					 Have an account ?<br />
+					<a class="" asp-action="Login" asp-controller="Account">
+						Login
+					</a>
+				</div>
+
+			</div>
+@*
+			<!-- Modal -->
+			<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Forgot Password ?</h4>
+						</div>
+						<div class="modal-body">
+							<p>Enter your e-mail address below to reset your password.</p>
+							<input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+
+						</div>
+						<div class="modal-footer">
+							<button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+							<button class="btn btn-theme" type="button">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- modal -->
+*@
+		</form>
+
+	</div>
+</div>
+
+@*<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Register">
             <div asp-validation-summary="All" class="text-danger"></div>
-            @*<div class="form-group">
-                <label asp-for="StudentId" class="control-label"></label>
-                <input asp-for="StudentId" class="form-control" />
-                <span asp-validation-for="StudentId" class="text-danger"></span>
-            </div>*@
+ 
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -42,16 +108,7 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <div>
-                <input asp-for="Volunteer" class="form-check-input" />
-                <label asp-for="Volunteer" class="control-label"></label>
-
-            </div>
-            <div>
-                <input asp-for="NeedHelp" class="form-check-input" />
-                <label asp-for="NeedHelp" class="control-label"></label>
-
-            </div>
+           
             <div class="form-group">
                 <input type="submit" value="Sginup" class="btn btn-primary" />
             </div>
@@ -59,4 +116,4 @@
     </div>
 </div>
 
-
+*@

@@ -4,7 +4,7 @@ namespace HelpFinal.Models.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
+       
         public string? StudentId { get; set; }
         [Required]
         [Display(Name ="Enter Your Name")]
@@ -26,7 +26,6 @@ namespace HelpFinal.Models.ViewModels
         [Compare("Password",ErrorMessage ="Password is not Match!")]
         public string? ConfirmPassword { get; set; }
 
-        public bool Volunteer { get; set; }
-        public bool NeedHelp { get; set; }
+        
     }
 }
