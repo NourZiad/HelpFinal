@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HelpFinal.Areas.Administrator.Controllers
+namespace HelpFinal.Areas.Users.Controllers
 {
-    public class DashboardController : Controller
+    public class HomeController : Controller
     {
-        [Area ("Administrator")]
+
+        [Area("Users")]
         [Authorize]
         public IActionResult Index()
         {

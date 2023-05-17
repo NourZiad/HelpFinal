@@ -1,19 +1,24 @@
 ﻿using HelpFinal.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace NextwoFinalApp2023.Controllers
+namespace HelpFinal.Controllers
 {
     public class AccountController : Controller
     {
+        #region configuration
         private UserManager<IdentityUser> userManager;
         private SignInManager<IdentityUser> signInManager;
-        public AccountController(UserManager<IdentityUser> _userManager,
-            SignInManager<IdentityUser> _signInManager)
+        private RoleManager<IdentityRole> roleManager;
+
+        public AccountController(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, RoleManager<IdentityRole> _roleManager)
         {
-            userManager = _userManager;
+            this.userManager = _userManager;
             signInManager = _signInManager;
+            this.roleManager = _roleManager;
         }
+        #endregion
         public IActionResult Register()
         {
             return View();
@@ -54,18 +59,54 @@ namespace NextwoFinalApp2023.Controllers
                 var result = await signInManager.PasswordSignInAsync(model.Email!, model.Password!, false, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Dashboard", new { area = "Administrator" });
+                    var user = await userManager.FindByEmailAsync(model.Email!);
+                    if (await userManager.IsInRoleAsync(user!, "Administrator"))
+                    {
+                        // Redirect to the dashboard page in the Administrator area for admin users
+                        return RedirectToAction("Index", "Dashboard", new { area = "Administrator" });
+                    }
+                    else if (await userManager.IsInRoleAsync(user!, "Volunteer"))
+                    {
+                        // Redirect to another page for volunteer users
+                        return RedirectToAction("Index", "Home", new { area = "Users" });
+                    }
                 }
+
                 ModelState.AddModelError("", "Invalid User or Password");
                 return View(model);
             }
+
             return View(model);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Login(LoginViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = await signInManager.PasswordSignInAsync(model.Email!, model.Password!, false, false);
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToAction("Index", "Dashboard", new { area = "Administrator" });
+        //        }
+        //        ModelState.AddModelError("", "Invalid User or Password");
+        //        return View(model);
+        //    }
+        //    return View(model);
+        //}
 
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
+        #region Roles
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        #endregion
     }
 }

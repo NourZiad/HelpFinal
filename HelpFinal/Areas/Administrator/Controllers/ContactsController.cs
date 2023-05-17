@@ -10,6 +10,7 @@ using HelpFinal.Models;
 using Microsoft.AspNetCore.Authorization;
 using HelpFinal.ViewComponents;
 using HelpFinal.Models.ViewModels;
+using System.Net.Mail;
 
 namespace HelpFinal.Areas.Administrator.Controllers
 {
@@ -56,32 +57,71 @@ namespace HelpFinal.Areas.Administrator.Controllers
             return View();
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( ContactViewModel contact)
+        public IActionResult Contact(ContactViewModel model)
         {
-
             if (ModelState.IsValid)
             {
-                Contact c = new Contact { 
-                ContactId = contact.ContactId,
-                Email = contact.Email,
-                Name=contact.Name,
-                Subject=contact.Subject,
-                Message=contact.Message,
-                CreationDate = contact.CreationDate,
-                IsDeleted=contact.IsDeleted,
-                IsPublished = contact.IsPublished,
-                UserId = contact.UserId
-                
-                };
-                _context.Contacts.Add(c);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    string name = model.Name;
+                    string email = model.Email;
+                    string subject = model.Subject;
+                    string message = model.Message;
+
+                    string to = "info@example.com"; // Change this email to your recipient email address
+                    string from = email;
+
+                    MailMessage mail = new MailMessage(from, to);
+                    mail.Subject = $"{subject}: {name}";
+                    mail.Body = $"You have received a new message from your website contact form.\n\n"
+                                + $"Here are the details:\n\n"
+                                + $"Name: {name}\n\n"
+                                + $"Email: {email}\n\n"
+                                + $"Subject: {subject}\n\n"
+                                + $"Message: {message}";
+
+                    SmtpClient smtpClient = new SmtpClient("your-smtp-server");
+                    smtpClient.Send(mail);
+
+                    return RedirectToAction("ContactSuccess");
+                }
+                catch (Exception ex)
+                {
+                    // Handle any errors or log them
+                    ModelState.AddModelError("", "An error occurred while sending the message.");
+                }
             }
-            return View(contact);
+
+            return View(model);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create( ContactViewModel contact)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        Contact c = new Contact { 
+        //        ContactId = contact.ContactId,
+        //        Email = contact.Email,
+        //        Name=contact.Name,
+        //        Subject=contact.Subject,
+        //        Message=contact.Message,
+        //        CreationDate = contact.CreationDate,
+        //        IsDeleted=contact.IsDeleted,
+        //        IsPublished = contact.IsPublished,
+        //        UserId = contact.UserId
+
+        //        };
+        //        _context.Contacts.Add(c);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(contact);
+        //}
 
         // GET: Administrator/Contacts/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -206,5 +246,10 @@ namespace HelpFinal.Areas.Administrator.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult ContactSuccess()
+        {
+            return View();
+        }
+
     }
 }

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Request>
+
+<!-- Causes Start -->
+<div class="causes">
+    <div class="container">
+        <div class="section-header text-center">
+            <p>Popular Causes</p>
+            <h2>Let's know about charity causes around the world</h2>
+        </div>
+<div class="owl-carousel causes-carousel">
+    @foreach (var item in Model)
+    {
+        <div class="causes-item">
+            <div class="causes-img">
+                <img src="~/img/causes-1.jpg" alt="Image">
+            </div>
+            <br>
+            <div class="causes-text">
+                <h6>@item.Uni</h6>
+                <h5>@item.Title</h5>
+                <p>@item.Desc</p>
+            </div>
+            <div class="causes-btn">
+                <a class="btn btn-custom">Learn More</a>
+                <a class="btn btn-custom">Accept</a>
+            </div>
+        </div>
+    }
+</div>
+</div>
+</div>
+
+@*<div class="causes">
+    <div class="container">
+        <div class="section-header text-center">
+            <p>Popular Causes</p>
+            <h2>Let's know about charity causes around the world</h2>
+        </div>
+        <div class="owl-carousel causes-carousel">
+            <div class="causes-item">
+
+             @foreach (var item in Model)
+                {
+                    <div class="causes-img">
+                        <img src="~/img/causes-1.jpg" alt="Image">
+                    </div>
+
+                    <div class="causes-text">
+                        <h6>@item.Uni</h6>
+                        <h5>@item.Title</h5>
+                        <p>@item.Desc</p>
+                    </div>
+                    <div class="causes-btn">
+                        <a class="btn btn-custom">Learn More</a>
+                        <a class="btn btn-custom">Accept</a>
+                    </div>
+                }
+            </div>
+           
+        </div>
+    </div>
+</div>*@
+<!-- Causes End -->

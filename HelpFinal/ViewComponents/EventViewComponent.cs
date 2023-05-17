@@ -13,7 +13,7 @@ namespace HelpFinal.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var data = db.Events.OrderByDescending(x => x.EventId).Take(2);
+            var data = db.Events.OrderByDescending(x => x.EventId).Take(3);
             return View(data);
         }
     }
