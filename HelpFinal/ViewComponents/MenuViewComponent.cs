@@ -13,7 +13,7 @@ namespace HelpFinal.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var data = db.Menus.OrderByDescending(x => x.MenuId);
+            var data = db.Menus/*.OrderByDescending(x => x.MenuId)*/;
             return View(data);
         }
     }

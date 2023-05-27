@@ -62,7 +62,87 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("AboutId");
 
-                    b.ToTable("Abouts");
+                    b.ToTable("Abouts", (string)null);
+                });
+
+            modelBuilder.Entity("HelpFinal.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Contact", b =>
@@ -101,7 +181,30 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("ContactId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
+                });
+
+            modelBuilder.Entity("HelpFinal.Models.Disabled", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DisabilityType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique()
+                        .HasFilter("[ApplicationUserId] IS NOT NULL");
+
+                    b.ToTable("Disabled", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Event", b =>
@@ -153,7 +256,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("EventId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Fact", b =>
@@ -184,7 +287,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("FactId");
 
-                    b.ToTable("Facts");
+                    b.ToTable("Facts", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Menu", b =>
@@ -218,7 +321,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("MenuId");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menus", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Request", b =>
@@ -258,7 +361,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("RequestId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Requests", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Slider", b =>
@@ -301,7 +404,52 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("SliderId");
 
-                    b.ToTable("Sliders");
+                    b.ToTable("Sliders", (string)null);
+                });
+
+            modelBuilder.Entity("HelpFinal.Models.StdDisbled", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AcceptedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssistanceNeeded")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DisabilityType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Place")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StdDisbleds", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.Testimonial", b =>
@@ -341,7 +489,7 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("TestimonialId");
 
-                    b.ToTable("Testimonials");
+                    b.ToTable("Testimonials", (string)null);
                 });
 
             modelBuilder.Entity("HelpFinal.Models.University", b =>
@@ -374,7 +522,48 @@ namespace HelpFinal.Migrations
 
                     b.HasKey("UniversityId");
 
-                    b.ToTable("Universities");
+                    b.ToTable("Universities", (string)null);
+                });
+
+            modelBuilder.Entity("HelpFinal.Models.Volunteer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Skills")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique()
+                        .HasFilter("[ApplicationUserId] IS NOT NULL");
+
+                    b.ToTable("Volunteers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -427,71 +616,6 @@ namespace HelpFinal.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -575,6 +699,24 @@ namespace HelpFinal.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HelpFinal.Models.Disabled", b =>
+                {
+                    b.HasOne("HelpFinal.Models.ApplicationUser", "ApplicationUser")
+                        .WithOne("Disabled")
+                        .HasForeignKey("HelpFinal.Models.Disabled", "ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("HelpFinal.Models.Volunteer", b =>
+                {
+                    b.HasOne("HelpFinal.Models.ApplicationUser", "ApplicationUser")
+                        .WithOne("Volunteer")
+                        .HasForeignKey("HelpFinal.Models.Volunteer", "ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -586,7 +728,7 @@ namespace HelpFinal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("HelpFinal.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -595,7 +737,7 @@ namespace HelpFinal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("HelpFinal.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -610,7 +752,7 @@ namespace HelpFinal.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("HelpFinal.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -619,11 +761,18 @@ namespace HelpFinal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("HelpFinal.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HelpFinal.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Disabled");
+
+                    b.Navigation("Volunteer");
                 });
 #pragma warning restore 612, 618
         }

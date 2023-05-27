@@ -1,4 +1,5 @@
 using HelpFinal.Data;
+using HelpFinal.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,11 @@ builder.Services.AddDbContext<FinalDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<FinalDbContext>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +32,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+//app.UseAuthentication();
+
 
 app.MapControllerRoute(
     name: "areas",
@@ -41,5 +48,8 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+//endpoints.MapControllerRoute(
+//        name: "registration",
+//        pattern: "Account/{action=RegistrationType}/{id?}");
 
 app.Run();

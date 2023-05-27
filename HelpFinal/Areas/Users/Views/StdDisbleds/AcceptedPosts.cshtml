@@ -1,0 +1,42 @@
+﻿@model IEnumerable<HelpFinal.Models.StdDisbled>
+
+    @{
+        ViewData["Title"] = "Accepted Posts";
+    }
+
+    <h2>Accepted Posts</h2>
+
+    @if (!Model.Any())
+    {
+        <p>No posts have been accepted by volunteers.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Accepted By</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <!-- Add more columns for the desired information -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var post in Model)
+                {
+                    <tr>
+                        <td>@post.Name</td>
+                        <td>@post.AcceptedBy</td>
+                        <td>@post.Date.ToShortDateString()</td>
+                        <td>@post.Time.ToShortTimeString()</td>
+                        <!-- Add more cells for the desired information -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>

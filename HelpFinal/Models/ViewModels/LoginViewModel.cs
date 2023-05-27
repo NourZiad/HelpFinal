@@ -14,6 +14,7 @@ namespace HelpFinal.Models.ViewModels
         [Display(Name = "Enter Your Password")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
-       
-    }
+		public bool RememberMe { get; set; }
+
+	}
 }

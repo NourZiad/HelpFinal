@@ -1,0 +1,22 @@
+﻿@model HelpFinal.Models.ViewModels.RegistrationTypeViewModel
+@{
+    ViewData["Title"] = "RegistrationType";
+}
+
+<h2>Registration Type</h2>
+
+<form asp-controller="Account" asp-action="Register" method="post">
+    <div>
+        <label>
+            <input type="radio" asp-for="RegistrationType" value="volunteer" /> I am a volunteer
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="radio" asp-for="RegistrationType" value="needHelp" /> I need help
+        </label>
+    </div>
+    <div>
+        <button type="submit">Next</button>
+    </div>
+</form>
