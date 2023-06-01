@@ -2,9 +2,135 @@
 
 @{
     ViewData["Title"] = "VolunteerRegistration";
+    Layout = null;
 }
 
-<h2>Volunteer Registration</h2>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="~/StyleSheet.css" />
+<script src="~/JavaScript.js"></script>
+
+
+<body>
+    <div class="container_SignUp">
+        <!-- Sign In - Hero Image -->
+        <div class="heroSignInBackground">
+            <div class="heroSignInBackgroundOverlay">
+                <div class="containerHeroSignIn">
+                    <div class="signInContent">
+                        <h1>Hello friend, welcome!</h1>
+                        <hr>
+                        <p>Login your details to start<br>your journey.</p>
+                    </div>
+                    <div class="heroSignInButton">
+                        <button class="buttonHeroSignIn" onclick="signIn()">SIGN IN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sign Up - Form -->
+        <div class="containerSignUp">
+            <div class="socialIcons">
+                <h1>Create Account</h1>
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="containerFormSignUp">
+                <form method="post">
+                    <div class="radioB">
+                        <label>
+                            <a href="#" onclick="selectOption('volunteer')">Volunteer</a>
+                        </label>
+                        <label>
+                            <a href="#" onclick="selectOption('disabled')">Disabled</a>
+                        </label>
+                    </div>
+
+                    @Html.TextBoxFor(model => model.Name, new { type = "text" ,placeholder = "Name"})
+                    @Html.TextBoxFor(model => model.StudentId, new { type = "text" ,placeholder = "Student ID"})
+                    @Html.TextBoxFor(model => model.Email, new { type = "email",placeholder = "Email" })
+                    @Html.PasswordFor(model => model.Password , new{placeholder = "Password"})
+                    @Html.TextBoxFor(model => model.Phone, new { type = "tel" ,placeholder = "Phone"})
+
+                    <div id="skillsField" style="display:none;">
+                        <label>Skills:</label>
+                        <div>
+                            <input type="checkbox" name="Skills" value="Reading Arabic">
+                            <label for="Reading Arabic">Reading Arabic</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Skills" value="Reading English">
+                            <label for="Reading English">Reading English</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Skills" value="Reading Both">
+                            <label for="Reading Both">Reading Arabic</label>
+                        </div>
+                    </div>
+
+                    <div id="disabilityField" style="display:none;">
+                        <label for="disabilityType">Disability Type:</label>
+                        <select id="disabilityType" name="DisabilityType">
+                            <option value="Hearing">Hearing</option>
+                            <option value="Visual">Visual</option>
+                            <option value="A Helpmate">A Helpmate</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+
+                    <button class="formSignUpButton buttonFormSignUp" type="submit">SIGN UP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  <div class="container_SignIn" id="container_SignIn">
+        <!-- Sign In - Form -->
+        <div class="containerSignIn">
+            <div class="socialIcons">
+                <h1>Sign In</h1>
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="containerFormSignIn">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                {
+                    <span class="title">or use your email account:</span>
+                    <span>Email</span>
+                    @Html.TextBoxFor(model => model.Email, new { type = "email" })
+                    <span>Password</span>
+                    @Html.PasswordFor(model => model.Password)
+                    <a href="#">forgot your password?</a>
+                    <div class="formSignInButton">
+                        <button class="buttonFormSignIn">SIGN IN</button>
+                    </div>
+                }
+            </div>
+
+
+        </div>
+        <!-- Sign Up - Hero Image -->
+        <div class="heroSignUpBackground" id="containerHeroSignUp">
+            <div class="heroSignUpBackgroundOverlay">
+                <div class="containerHeroSignUp">
+                    <div class="signUpContent">
+                        <h1>Not a member?</h1>
+                        <hr>
+                        <p>Enter your personal details<br>and start your journey.</p>
+                    </div>
+                    <div class="heroSignUpButton" onclick="signUp()">
+                        <button class="buttonHeroSignUp">SIGN UP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+
+@*<h2>Volunteer Registration</h2>
 
 <hr />
 <div class="row">
@@ -50,6 +176,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Register" asp-controller="Account">Back to List</a>
 </div>
-
+*@

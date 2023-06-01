@@ -2,98 +2,90 @@
 
 @{
     ViewData["Title"] = "Register";
-	Layout = null;
+    Layout = null;
 }
 
-
-
-
-<!-- Bootstrap core CSS -->
-<link href="~/assets/css/bootstrap.css" rel="stylesheet">
-<!--external css-->
-<link href="~/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-<!-- Custom styles for this template -->
-<link href="~/assets/css/style.css" rel="stylesheet">
-<link href="~/assets/css/style-responsive.css" rel="stylesheet">
-
-
-
-
-
-<div id="login-page">
-	<div class="container">
-
-		<form class="form-login" asp-action="Register">
-			
-
-			<h2 class="form-login-heading">sign up now</h2>
-			<div class="login-wrap">
-				<input asp-for="Name" class="form-control" placeholder="User ID" autofocus>
-				<br>
-				<input asp-for="Email" class="form-control" placeholder="Email">
-				<br>
-				<input asp-for="Phone" class="form-control" placeholder="Phone">
-				<br>
-				<input asp-for="Password" class="form-control" placeholder="Password">
-				<br>
-				<input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password">
-				<br />
-		
-				<button class="btn btn-theme btn-block" asp-action="Index" asp-controller="Dashboard" , {area="Administrator" }" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
-				<hr>
-
-				<div class="registration">
-					 Have an account ?<br />
-					<a class="" asp-action="Login" asp-controller="Account">
-						Login
-					</a>
-				</div>
-
-			</div>
-
-		</form>
-
-	</div>
-</div>
-
-@*<hr />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="~/StyleSheet.css" />
+<script src="~/JavaScript.js"></script>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=sLZMO9fx"></script>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Register">
             <div asp-validation-summary="All" class="text-danger"></div>
- 
+            <div class="form-group">
+                <div class="radioB">
+
+                    <input asp-for="IsVolunteer" onclick="selectOption('volunteer')" /> @Html.DisplayNameFor(model => model.IsVolunteer)
+
+                    <input asp-for="IsDisabled" onclick="selectOption('disabled')" /> @Html.DisplayNameFor(model => model.IsDisabled)
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentId" class="control-label"></label>
+                <input asp-for="StudentId" class="form-control" oninput="readInputRequirement()   />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" oninput="readInputRequirement()    />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" oninput="readInputRequirement()  />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
+                <input asp-for="Phone" class="form-control" oninput="readInputRequirement()   />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" oninput="readInputRequirement()   />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+
+            <div id="skillsField" style="display:none;">
+                <label>Skills:</label>
+                <div>
+                    <input type="checkbox" name="Skills" value="Reading Arabic">
+                    <label>Reading Arabic</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="Skills" value="Reading English">
+                    <label>Reading English</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="Skills" value="Reading Both">
+                    <label>Reading Arabic</label>
+                </div>
             </div>
-           
-            <div class="form-group">
-                <input type="submit" value="Sginup" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <div id="disabilityField" style="display:none;">
+                <label for="disabilityType">Disability Type:</label>
+                <select id="disabilityType" name="DisabilityType" oninput="readInputRequirement()>
+                    <option value="" disabled selected>Select disability type</option>
+                    <option value="Visual">Visual</option>
+                    <option value="Hearing">Hearing</option>
+                    <option value="Mobility">Mobility</option>
+                    <option value="Cognitive">Cognitive</option>
+
+                  </select>
+              </div>
+               <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+              </div>
+              </form>
+         
     </div>
 </div>
 
-*@
+<div>
+    <a asp-action="Login">Have Account</a>
+</div>
+

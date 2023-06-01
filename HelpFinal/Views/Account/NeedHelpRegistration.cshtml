@@ -2,54 +2,115 @@
 
 @{
     ViewData["Title"] = "NeedHelpRegistration";
+    Layout = null;
 }
 
-<h2>NeedHelp Registration</h2>
 
-@*
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="NeedHelpRegistration">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="StudentId" class="control-label"></label>
-                <input asp-for="StudentId" class="form-control" />
-                <span asp-validation-for="StudentId" class="text-danger"></span>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="~/StyleSheet.css" />
+
+
+
+<body>
+    <div class="container_SignUp">
+        <!-- Sign In - Hero Image -->
+        <div class="heroSignInBackground">
+            <div class="heroSignInBackgroundOverlay">
+                <div class="containerHeroSignIn">
+                    <div class="signInContent">
+                        <h1>Hello friend, welcome!</h1>
+                        <hr>
+                        <p>Login your details to start<br>your journey.</p>
+                    </div>
+                    <div class="heroSignInButton">
+                        <button class="buttonHeroSignIn" onclick="signIn()">SIGN IN</button>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <!-- Sign Up - Form -->
+        <div class="containerSignUp">
+            <div class="socialIcons">
+                <h1>Create Account</h1>
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="containerFormSignUp">
+                @using (Html.BeginForm("NeedHelpRegistration", "Account", FormMethod.Post))
+                {
+                   
+                    
+                @Html.TextBoxFor(model => model.Name, new { type = "text" ,placeholder = "Name"})
+                @Html.TextBoxFor(model => model.StudentId, new { type = "text" ,placeholder = "Student ID"})
+                @Html.TextBoxFor(model => model.Email, new { type = "email",placeholder = "Email" })
+                @Html.PasswordFor(model => model.Password , new{placeholder = "Password"})
+                @Html.TextBoxFor(model => model.Email, new { type = "tel" ,placeholder = "Phone"})
+                    
+
+
+                <div id="disabilityField" >
+                <label for="disabilityType">Disability Type:</label>
+                <select id="disabilityType" name="disabilityType" >
+                <option value="Hearing">Hearing</option>
+                <option value="Visual">Visual</option>
+                <option value="A Helpmate">A Helpmate</option>
+                <!-- Add more options as needed -->
+                </select>
+                </div>
+
+
+
+                    <div class="formSignUpButton">
+                <button class="buttonFormSignUp">SIGN UP</button>
+                </div>
+                }
             </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>*@
+    <div class="container_SignIn" id="container_SignIn">
+        <!-- Sign In - Form -->
+        <div class="containerSignIn">
+            <div class="socialIcons">
+                <h1>Sign In</h1>
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="containerFormSignIn">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                {
+                    <span class="title">or use your email account:</span>
+                    <span>Email</span>
+                    @Html.TextBoxFor(model => model.Email, new { type = "email" })
+                    <span>Password</span>
+                    @Html.PasswordFor(model => model.Password)
+                    <a href="#">forgot your password?</a>
+                    <div class="formSignInButton">
+                        <button class="buttonFormSignIn">SIGN IN</button>
+                    </div>
+                }
+            </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+        </div>
+        <!-- Sign Up - Hero Image -->
+        <div class="heroSignUpBackground" id="containerHeroSignUp">
+            <div class="heroSignUpBackgroundOverlay">
+                <div class="containerHeroSignUp">
+                    <div class="signUpContent">
+                        <h1>Not a member?</h1>
+                        <hr>
+                        <p>Enter your personal details<br>and start your journey.</p>
+                    </div>
+                    <div class="heroSignUpButton" onclick="signUp()">
+                        <button class="buttonHeroSignUp">SIGN UP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*    <footer>
+    <p>Design & Code by<a href="https://www.gardiandesign.com" target="_blank">Darjan Gardinovacki</a>- 2019</p>
+    </footer>*@
+    </body>

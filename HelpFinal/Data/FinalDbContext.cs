@@ -22,15 +22,17 @@ namespace HelpFinal.Data
         public DbSet<Fact> Facts { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<StdDisbled> StdDisbleds { get; set; }
-        public DbSet<HelpFinal.Models.ViewModels.VolunteerViewModel> VolunteerViewModel { get; set; } = default!;
+        public DbSet<UsersVolunteer> UsersVolunteers { get; set; }
+        public DbSet<UsersDisabled> UsersDisabled { get; set; }
+        public DbSet<HelpFinal.Models.ViewModels.RegisterViewModel> RegisterViewModel { get; set; } = default!;
 
-	
 
 
 
-		//public DbSet<VolunteerRegistrationViewModel> VolunteerRegistrationViewModels { get; set; }
-		//public DbSet<NeedHelpRegistrationViewModel> NeedHelpRegistrationViewModels { get; set; }
-		//public DbSet<HelpFinal.Models.ViewModels.VolunteerRegistrationViewModel> VolunteerRegistrationViewModel { get; set; } = default!;
-		//public DbSet<HelpFinal.Models.ViewModels.NeedHelpRegistrationViewModel> NeedHelpRegistrationViewModel { get; set; } = default!;
-	}
+
+        //public DbSet<VolunteerRegistrationViewModel> VolunteerRegistrationViewModels { get; set; }
+        //public DbSet<NeedHelpRegistrationViewModel> NeedHelpRegistrationViewModels { get; set; }
+        //public DbSet<HelpFinal.Models.ViewModels.VolunteerRegistrationViewModel> VolunteerRegistrationViewModel { get; set; } = default!;
+        //public DbSet<HelpFinal.Models.ViewModels.NeedHelpRegistrationViewModel> NeedHelpRegistrationViewModel { get; set; } = default!;
+    }
 }

@@ -32,6 +32,7 @@ namespace HelpFinal.Models.ViewModels
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password is not Match!")]
         public string ConfirmPassword { get; set; }
+        public string? Skills { get; set; }
 
     }
 }

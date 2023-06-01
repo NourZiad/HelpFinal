@@ -11,27 +11,8 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StudentID" class="control-label"></label>
-                <input asp-for="StudentID" class="form-control" />
-                <span asp-validation-for="StudentID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DisabilityType" class="control-label">Disability Type:</label>
-                <select asp-for="DisabilityType" class="form-control" required>
-                    <option value="" disabled selected>Select disability type</option>
-                    <option value="Visual">Visual</option>
-                    <option value="Hearing">Hearing</option>
-                    <option value="Mobility">Mobility</option>
-                    <option value="Cognitive">Cognitive</option>
-                </select>
-                <span asp-validation-for="DisabilityType" class="text-danger"></span>
-            </div>
+           
+            
             <div class="form-group">
                 <label asp-for="AssistanceNeeded" class="control-label">Assistance Needed:</label>
                 <select asp-for="AssistanceNeeded" class="form-control" required>
@@ -58,11 +39,7 @@
                 <input asp-for="Time" class="form-control" />
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

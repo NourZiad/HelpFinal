@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HelpFinal.Migrations
 {
     [DbContext(typeof(FinalDbContext))]
-    [Migration("20230526220133_n")]
-    partial class n
+    [Migration("20230530174444_a")]
+    partial class a
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -425,84 +425,48 @@ namespace HelpFinal.Migrations
                     b.ToTable("Universities");
                 });
 
-            modelBuilder.Entity("HelpFinal.Models.ViewModels.DisabledViewModel", b =>
+            modelBuilder.Entity("HelpFinal.Models.UsersDisabled", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DisbilityType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegisterViewModelId")
-                        .IsRequired()
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegisterViewModelId")
-                        .IsUnique();
-
-                    b.ToTable("DisabledViewModels");
-                });
-
-            modelBuilder.Entity("HelpFinal.Models.ViewModels.RegisterViewModel", b =>
-                {
-                    b.Property<string>("RegisterViewModelId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired()
+                    b.Property<string>("DisabilityType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.HasKey("RegisterViewModelId");
-
-                    b.ToTable("RegisterViewModels");
+                    b.ToTable("UsersDisabled");
                 });
 
-            modelBuilder.Entity("HelpFinal.Models.ViewModels.VolunteerViewModel", b =>
+            modelBuilder.Entity("HelpFinal.Models.UsersVolunteer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RegisterViewModelId")
-                        .IsRequired()
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Skills")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RegisterViewModelId")
-                        .IsUnique();
-
-                    b.ToTable("VolunteerViewModels");
+                    b.ToTable("UsersVolunteers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -703,28 +667,6 @@ namespace HelpFinal.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HelpFinal.Models.ViewModels.DisabledViewModel", b =>
-                {
-                    b.HasOne("HelpFinal.Models.ViewModels.RegisterViewModel", "RegisterViewModel")
-                        .WithOne("DisabledViewModel")
-                        .HasForeignKey("HelpFinal.Models.ViewModels.DisabledViewModel", "RegisterViewModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RegisterViewModel");
-                });
-
-            modelBuilder.Entity("HelpFinal.Models.ViewModels.VolunteerViewModel", b =>
-                {
-                    b.HasOne("HelpFinal.Models.ViewModels.RegisterViewModel", "RegisterViewModel")
-                        .WithOne("VolunteerViewModel")
-                        .HasForeignKey("HelpFinal.Models.ViewModels.VolunteerViewModel", "RegisterViewModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RegisterViewModel");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -773,15 +715,6 @@ namespace HelpFinal.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HelpFinal.Models.ViewModels.RegisterViewModel", b =>
-                {
-                    b.Navigation("DisabledViewModel")
-                        .IsRequired();
-
-                    b.Navigation("VolunteerViewModel")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

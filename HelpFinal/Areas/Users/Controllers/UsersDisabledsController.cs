@@ -7,23 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HelpFinal.Data;
 using HelpFinal.Models;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace HelpFinal.Areas.Users.Controllers
 {
     [Area("Users")]
-    public class StdDisbledsController : Controller
+    public class UsersDisabledsController : Controller
     {
         private readonly FinalDbContext _context;
 
-        public StdDisbledsController(FinalDbContext context)
+        public UsersDisabledsController(FinalDbContext context)
         {
             _context = context;
         }
 
-        // GET: Users/StdDisbleds
-
+        // GET: Users/UsersDisableds
         public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -32,11 +30,11 @@ namespace HelpFinal.Areas.Users.Controllers
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 // Retrieve the stdDisbled objects for the logged-in user
-                var stdDisbleds = await _context.StdDisbleds
-                    .Where(s => s.UserId == userId)
+                var Disbleds = await _context.UsersDisabled
+                    .Where(s => s.Id == userId)
                     .ToListAsync();
 
-                return View(stdDisbleds);
+                return View(Disbleds);
             }
             else
             {
@@ -44,89 +42,75 @@ namespace HelpFinal.Areas.Users.Controllers
                 // For example, redirect to login page or display an error message
                 return RedirectToAction("Login", "Account");
             }
+            //return _context.UsersDisabled != null ? 
+            //              View(await _context.UsersDisabled.ToListAsync()) :
+            //              Problem("Entity set 'FinalDbContext.UsersDisabled'  is null.");
         }
 
-        //public async Task<IActionResult> Index()
-        //{
-       
-        //    return _context.StdDisbleds != null ? 
-        //                  View(await _context.StdDisbleds.ToListAsync()) :
-        //                  Problem("Entity set 'FinalDbContext.StdDisbleds'  is null.");
-        //}
-
-        // GET: Users/StdDisbleds/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Users/UsersDisableds/Details/5
+        public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.StdDisbleds == null)
+            if (id == null || _context.UsersDisabled == null)
             {
                 return NotFound();
             }
 
-            var stdDisbled = await _context.StdDisbleds
+            var usersDisabled = await _context.UsersDisabled
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (stdDisbled == null)
+            if (usersDisabled == null)
             {
                 return NotFound();
             }
 
-            return View(stdDisbled);
+            return View(usersDisabled);
         }
 
-        // GET: Users/StdDisbleds/Create
+        // GET: Users/UsersDisableds/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/StdDisbleds/Create
+        // POST: Users/UsersDisableds/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( StdDisbled stdDisbled)
+        public async Task<IActionResult> Create([Bind("Id,StudentId,Name,Email,Phone,DisabilityType")] UsersDisabled usersDisabled)
         {
             if (ModelState.IsValid)
             {
-                string studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                // Assign the user ID to the StudentId property
-                stdDisbled.UserId = studentId;
-                _context.StdDisbleds.Add(stdDisbled);
+                _context.Add(usersDisabled);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(stdDisbled);
+            return View(usersDisabled);
         }
 
-
-        public IActionResult AcceptedPosts()
+        // GET: Users/UsersDisableds/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
-            var acceptedPosts = _context.StdDisbleds.Where(p => !string.IsNullOrEmpty(p.AcceptedBy)).ToList();
-            return View(acceptedPosts);
-        }
-    
-
-    // GET: Users/StdDisbleds/Edit/5
-    public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.StdDisbleds == null)
+            if (id == null || _context.UsersDisabled == null)
             {
                 return NotFound();
             }
 
-            var stdDisbled = await _context.StdDisbleds.FindAsync(id);
-            if (stdDisbled == null)
+            var usersDisabled = await _context.UsersDisabled.FindAsync(id);
+            if (usersDisabled == null)
             {
                 return NotFound();
             }
-            return View(stdDisbled);
+            return View(usersDisabled);
         }
 
+        // POST: Users/UsersDisableds/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StudentID,DisabilityType,AssistanceNeeded,Place,Date,Time,PhoneNumber")] StdDisbled stdDisbled)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,StudentId,Name,Email,Phone,DisabilityType")] UsersDisabled usersDisabled)
         {
-            if (id != stdDisbled.Id)
+            if (id != usersDisabled.Id)
             {
                 return NotFound();
             }
@@ -135,12 +119,12 @@ namespace HelpFinal.Areas.Users.Controllers
             {
                 try
                 {
-                    _context.Update(stdDisbled);
+                    _context.Update(usersDisabled);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StdDisbledExists(stdDisbled.Id))
+                    if (!UsersDisabledExists(usersDisabled.Id))
                     {
                         return NotFound();
                     }
@@ -151,49 +135,49 @@ namespace HelpFinal.Areas.Users.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(stdDisbled);
+            return View(usersDisabled);
         }
 
-        // GET: Users/StdDisbleds/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Users/UsersDisableds/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.StdDisbleds == null)
+            if (id == null || _context.UsersDisabled == null)
             {
                 return NotFound();
             }
 
-            var stdDisbled = await _context.StdDisbleds
+            var usersDisabled = await _context.UsersDisabled
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (stdDisbled == null)
+            if (usersDisabled == null)
             {
                 return NotFound();
             }
 
-            return View(stdDisbled);
+            return View(usersDisabled);
         }
 
-        // POST: Users/StdDisbleds/Delete/5
+        // POST: Users/UsersDisableds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.StdDisbleds == null)
+            if (_context.UsersDisabled == null)
             {
-                return Problem("Entity set 'FinalDbContext.StdDisbleds'  is null.");
+                return Problem("Entity set 'FinalDbContext.UsersDisabled'  is null.");
             }
-            var stdDisbled = await _context.StdDisbleds.FindAsync(id);
-            if (stdDisbled != null)
+            var usersDisabled = await _context.UsersDisabled.FindAsync(id);
+            if (usersDisabled != null)
             {
-                _context.StdDisbleds.Remove(stdDisbled);
+                _context.UsersDisabled.Remove(usersDisabled);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StdDisbledExists(int id)
+        private bool UsersDisabledExists(string id)
         {
-          return (_context.StdDisbleds?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.UsersDisabled?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
