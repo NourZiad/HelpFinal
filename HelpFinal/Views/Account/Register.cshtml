@@ -25,30 +25,30 @@
             </div>
             <div class="form-group">
                 <label asp-for="StudentId" class="control-label"></label>
-                <input asp-for="StudentId" class="form-control" oninput="readInputRequirement()   />
+                <input asp-for="StudentId" class="form-control" onfocus="readInputRequirement('disabled')"   />
                 <span asp-validation-for="StudentId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" oninput="readInputRequirement()    />
+                <input asp-for="Name" class="form-control" onfocus="readInputRequirement('disabled')" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" oninput="readInputRequirement()  />
+                <input asp-for="Email" class="form-control" onfocus="readInputRequirement('disabled')" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" oninput="readInputRequirement()   />
+                <input asp-for="Phone" class="form-control" onfocus="readInputRequirement('disabled')" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" oninput="readInputRequirement()   />
+                <input asp-for="Password" class="form-control" onfocus="readInputRequirement('disabled')" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-
+            <br />
 
             <div id="skillsField" style="display:none;">
                 <label>Skills:</label>
@@ -62,13 +62,13 @@
                 </div>
                 <div>
                     <input type="checkbox" name="Skills" value="Reading Both">
-                    <label>Reading Arabic</label>
+                    <label>Reading Both</label>
                 </div>
             </div>
 
             <div id="disabilityField" style="display:none;">
                 <label for="disabilityType">Disability Type:</label>
-                <select id="disabilityType" name="DisabilityType" oninput="readInputRequirement()>
+                <select id="disabilityType" name="DisabilityType" oninput="readInputRequirement()">
                     <option value="" disabled selected>Select disability type</option>
                     <option value="Visual">Visual</option>
                     <option value="Hearing">Hearing</option>
@@ -80,7 +80,9 @@
                <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
               </div>
-       </form>
+              </form>
+            
+       
          
     </div>
 </div>

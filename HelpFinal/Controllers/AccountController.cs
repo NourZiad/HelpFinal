@@ -232,101 +232,10 @@ namespace HelpFinal.Controllers
 
 
 
-		//public IActionResult Register()
-		//{
-		//    return View("RegistrationType");
-		//}
+		
 
-
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public IActionResult Register(string registrationType)
-		//{
-		//    if (registrationType == "volunteer")
-		//    {
-		//        // Redirect to volunteer registration page
-		//        return RedirectToAction("VolunteerRegistration");
-		//    }
-		//    else if (registrationType == "needHelp")
-		//    {
-		//        // Redirect to need help registration page
-		//        return RedirectToAction("NeedHelpRegistration");
-		//    }
-		//    else
-		//    {
-		//        // Invalid registration type, handle accordingly
-		//        return RedirectToAction("RegistrationType");
-		//    }
-		//}
-
-		//[HttpGet]
-		//public IActionResult VolunteerRegistration()
-		//{
-		//    // Create a new instance of the VolunteerRegistrationViewModel if needed
-		//    var model = new VolunteerRegistrationViewModel();
-		//    return View(model);
-		//}
-
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public IActionResult VolunteerRegistration(VolunteerRegistrationViewModel model)
-		//{
-		//    if (ModelState.IsValid)
-		//    {
-		//        // Process the volunteer registration data and redirect to a success page
-		//        return RedirectToAction("Login");
-		//    }
-
-		//    return View(model);
-		//}
-
-		//[HttpGet]
-		//public IActionResult NeedHelpRegistration()
-		//{
-		//    // Create a new instance of the NeedHelpRegistrationViewModel if needed
-		//    var model = new NeedHelpRegistrationViewModel();
-		//    return View(model);
-		//}
-
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public IActionResult NeedHelpRegistration(NeedHelpRegistrationViewModel model)
-		//{
-		//    if (ModelState.IsValid)
-		//    {
-		//        // Process the need help registration data and redirect to a success page
-		//        //return RedirectToAction("NeedHelpPage", "Home");
-
-		//        return RedirectToAction("Login");
-		//    }
-
-		//    return View(model);
-		//}
-
-
-		//[HttpPost]
-		//public async Task<IActionResult> Register(RegisterViewModel model)
-		//{
-		//    if (ModelState.IsValid)
-		//    {
-		//        IdentityUser user = new IdentityUser
-		//        {
-		//            Email = model.Email,
-		//            UserName = model.Email
-		//        };
-		//        var result = await userManager.CreateAsync(user, model.Password!);
-		//        if (result.Succeeded)
-		//        {
-		//            return RedirectToAction("Login");
-		//        }
-		//        foreach (var err in result.Errors)
-		//        {
-		//            ModelState.AddModelError(err.Code, err.Description);
-		//        }
-		//        return View(model);
-		//    }
-		//    return View(model);
-		//}
+		
+		
 
 		public IActionResult Login()
         {
@@ -346,15 +255,18 @@ namespace HelpFinal.Controllers
 					var user = await userManager.FindByEmailAsync(model.Email!);
 					if (await userManager.IsInRoleAsync(user!, "Administrator"))
 					{
-						// Redirect to the dashboard page in the Administrator area for admin users
 						return RedirectToAction("Index", "Dashboard", new { area = "Administrator" });
 					}
 					else if (await userManager.IsInRoleAsync(user!, "Disabled"))
 					{
-						// Redirect to another page for volunteer users
 						return RedirectToAction("Index", "Home", new { area = "Users" });
 					}
-				}
+                    else if (await userManager.IsInRoleAsync(user!, "Volunteer"))
+                    {
+                       
+                        return RedirectToAction("Index", "Home", new { area = "Volunteer" });
+                    }
+                }
 
 				ModelState.AddModelError("", "Invalid User or Password");
 				return View(model);
@@ -363,21 +275,7 @@ namespace HelpFinal.Controllers
 			return View(model);
 		}
 
-		//[HttpPost]
-		//public async Task<IActionResult> Login(LoginViewModel model)
-		//{
-		//    if (ModelState.IsValid)
-		//    {
-		//        var result = await signInManager.PasswordSignInAsync(model.Email!, model.Password!, false, false);
-		//        if (result.Succeeded)
-		//        {
-		//            return RedirectToAction("Index", "Dashboard", new { area = "Administrator" });
-		//        }
-		//        ModelState.AddModelError("", "Invalid User or Password");
-		//        return View(model);
-		//    }
-		//    return View(model);
-		//}
+		
 
 		public async Task<IActionResult> Logout()
         {

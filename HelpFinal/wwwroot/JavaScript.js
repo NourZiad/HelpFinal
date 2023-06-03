@@ -35,19 +35,33 @@ function signIn() {
 
                         }
 }
-
-function readInputRequirement() {
+function readInputRequirement(option) {
     var input = event.target;
-    if (input.value === '' && document.getElementById('IsDisabled').checked) {
+    if (option === 'disabled' && input.value === '') {
         var label = input.previousElementSibling;
         var inputRequirement = label.innerText;
 
         var speech = new SpeechSynthesisUtterance();
         speech.lang = "en-US";
-        speech.text = "Please provide the following information: " + inputRequirement;
+        speech.text = "Please" + inputRequirement;
+        speech.rate = 0.5;
         speechSynthesis.speak(speech);
     }
 }
+
+//function readInputRequirement() {
+//    var input = event.target;
+//    if (input.value === '' && document.getElementById('IsDisabled').checked) {
+//        var label = input.previousElementSibling;
+//        var inputRequirement = label.innerText;
+
+//        var speech = new SpeechSynthesisUtterance();
+//        speech.lang = "en-US";
+//        speech.text = "Please " + inputRequirement;
+//        speech.rate = 0.5; 
+//        speechSynthesis.speak(speech);
+//    }
+//}
 
 //function toggleFields() {
 //    var userTypes = document.getElementsByName('UserType');

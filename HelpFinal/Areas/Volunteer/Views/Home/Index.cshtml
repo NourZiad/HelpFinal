@@ -1,0 +1,81 @@
+﻿@model List<HelpFinal.Models.ViewModels.RequestViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<h4>Requests from Disabled Persons</h4>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>Name</th>
+            <th>Disability Type</th>
+            <th>Needs</th>
+            <th>Place</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            var request = item.Request;
+            var user = item.User;
+
+            <tr>
+                <td>@(user?.Name)</td>
+                <td>@(user?.DisabilityType)</td>
+                <td>@(request?.AssistanceNeeded)</td>
+                <td>@(request?.Place)</td>
+                <td>@(request?.Date.ToString("d"))</td>
+                <td>@(request?.Time.ToString("t"))</td>
+                <td>
+                     @if (item.Accepted)
+    {
+        <span class="text-success">Accepted</span>
+        <form method="post" asp-action="RetractPosts">
+            <input type="hidden" name="requestId" value="@request.Id" />
+            <button type="submit" class="btn btn-danger">Retract</button>
+        </form>
+    }
+    else
+    {
+                        <a asp-action="AcceptPosts" asp-route-id="@request.Id" class="btn btn-success">Accept</a>
+
+    }
+                   @* @if (item.Accepted)
+                    {
+                        <span class="text-success">Accepted</span>
+                    }
+                    else
+                    {
+                        <button onclick="showConfirmation(@request.Id)" class="btn btn-success">Accept</button>
+
+                       <a asp-action="AcceptPosts" asp-route-id="@request.Id" class="btn btn-success">Accept</a>
+                   }*@
+                </td>
+
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No requests found.</p>
+}
+<script>
+    function showConfirmation(requestId) {
+        if (confirm("Are you sure you want to accept this request?")) {
+            // If the user confirms, redirect to the AcceptPosts action
+            var url = "/Volunteer/AcceptPosts/" + requestId;
+            window.location.href = url;
+        }
+    }
+</script>
+
+
+
+
+

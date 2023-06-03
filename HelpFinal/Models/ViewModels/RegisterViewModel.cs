@@ -33,6 +33,7 @@ namespace HelpFinal.Models.ViewModels
         public bool IsVolunteer { get; set; }
         public bool IsDisabled { get; set; }
         public string? Skills { get; set; }
+        [Display(Name = "Select Disability Type")]
         public string? DisabilityType { get; set; }
         
 

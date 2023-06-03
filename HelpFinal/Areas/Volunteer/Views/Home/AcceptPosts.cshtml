@@ -1,0 +1,51 @@
+﻿@model IEnumerable<HelpFinal.Models.StdDisbled>
+
+@{
+    ViewData["Title"] = "Accepted Posts";
+}
+
+<h2>Accepted Posts</h2>
+
+@if (!Model.Any())
+{
+    <p>No posts have been accepted.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Accepted By</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in Model)
+            {
+                <tr>
+
+                    @if (string.IsNullOrEmpty(post.AcceptedBy))
+                    {
+                        <form method="post" asp-action="AcceptRequest">
+                            <input type="hidden" name="requestId" value="@post.Id" />
+                            <input type="submit" value="Accept" />
+                        </form>
+                    }
+                    else
+                    {
+                        <p>Accepted By: @post.AcceptedBy</p>
+                    }
+                    <td>@post.Date.ToShortDateString()</td>
+                    <td>@post.Time.ToShortTimeString()</td>
+                    <!-- Add more cells for the desired information -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

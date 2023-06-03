@@ -26,6 +26,8 @@
     <Folder Include="Areas\Administrator\Models\" />
     <Folder Include="Areas\Users\Data\" />
     <Folder Include="Areas\Users\Models\" />
+    <Folder Include="Areas\Volunteer\Data\" />
+    <Folder Include="Areas\Volunteer\Models\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 

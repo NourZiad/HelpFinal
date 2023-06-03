@@ -99,15 +99,19 @@ namespace HelpFinal.Areas.Users.Controllers
         }
 
 
+
         public IActionResult AcceptedPosts()
         {
-            var acceptedPosts = _context.StdDisbleds.Where(p => !string.IsNullOrEmpty(p.AcceptedBy)).ToList();
-            return View(acceptedPosts);
+            var acceptedRequests = _context.StdDisbleds.Where(r => r.AcceptedBy != null).ToList();
+            return View(acceptedRequests);
         }
-    
 
-    // GET: Users/StdDisbleds/Edit/5
-    public async Task<IActionResult> Edit(int? id)
+
+
+
+
+        // GET: Users/StdDisbleds/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.StdDisbleds == null)
             {
