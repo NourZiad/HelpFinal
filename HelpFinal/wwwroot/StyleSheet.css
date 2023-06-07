@@ -1,13 +1,4 @@
-﻿/***************************************************************************
- * 																	                                       *
- *  Hello! Thank you for stopping by!	    							                   *
- *  Don't forget to follow me on: 										                     *
- *	Dribbble: https://dribbble.com/gardiandesign						               *
- *	LinkedIn: https://www.linkedin.com/in/darjan-gardinovacki-602252132/   *
- *  Cheers, Darjan! 										 			                             *
- * 																		                                     *
-***************************************************************************/
-
+﻿
 
 * {
     box-sizing: border-box;
@@ -120,8 +111,9 @@ a {
 }
 
 .heroSignInBackground {
-    background: url("img/event-1.jpg");
+    background: url("img/background4.jpg");
     background-size: cover;
+
 }
 
 .heroSignInBackgroundOverlay {
@@ -273,8 +265,9 @@ input, select, textarea {
 }
 
 .heroSignUpBackground {
-    background: url("img/event-1.jpg");
+    background: url("img/background4.jpg");
     background-size: cover;
+
 }
 
 .heroSignUpBackgroundOverlay {

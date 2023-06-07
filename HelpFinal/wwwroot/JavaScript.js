@@ -43,7 +43,7 @@ function readInputRequirement(option) {
 
         var speech = new SpeechSynthesisUtterance();
         speech.lang = "en-US";
-        speech.text = "Please" + inputRequirement;
+        speech.text = "Enter" + inputRequirement;
         speech.rate = 0.5;
         speechSynthesis.speak(speech);
     }

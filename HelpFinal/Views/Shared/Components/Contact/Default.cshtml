@@ -8,11 +8,11 @@
             <h2>Contact for any query</h2>
         </div>
         <div class="contact-img">
-            <img src="~/img/contact.jpg" alt="Image">
+            <img src="~/img/background2.jpg" alt="Image">
         </div>
         <div class="contact-form">
             <div id="success"></div>
-            <form name="sentMessage" id="contactForm" novalidate="novalidate" method="post" asp-action="Contact">
+            <form  method="post" asp-action="Contact">
                 <div class="control-group">
                     <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
                     <p class="help-block text-danger"></p>
@@ -30,12 +30,12 @@
                     <p class="help-block text-danger"></p>
                 </div>
                 <div>
-                    <button class="btn btn-custom" type="submit" asp-action="" asp-controller="" id="sendMessageButton">Send Message</button>
+                    <button class="btn btn-custom" type="submit" >Send Message</button>
                 </div>
             </form>
         </div>
 
-        <!-- Display Contact Information -->
+@*        <!-- Display Contact Information -->
         <div>
             
             <ul>
@@ -51,7 +51,7 @@
             </ul>
         </div>
     </div>
-</div>
+</div>*@
 <!-- Contact End -->
 @*@model IEnumerable<Contact>
 

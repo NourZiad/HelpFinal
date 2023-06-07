@@ -15,9 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubTitle)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.AboutUs)
             </th>
@@ -30,18 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Image)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPublished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -51,9 +38,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubTitle)
-            </td>
+         
             <td>
                 @Html.DisplayFor(modelItem => item.AboutUs)
             </td>
@@ -66,22 +51,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Image)
             </td>
+           
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPublished)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AboutId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AboutId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AboutId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.AboutId" class="btn btn-success">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AboutId" class="btn btn-default">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AboutId" class="btn btn-danger">Delete</a> | 
+                    <a asp-action="SoftDelete" asp-route-id="@item.AboutId" class="btn btn-warning">SoftDelete</a>
             </td>
         </tr>
 }

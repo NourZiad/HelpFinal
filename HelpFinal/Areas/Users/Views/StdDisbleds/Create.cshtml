@@ -9,9 +9,13 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
-           
+            <div class="form-group">
+                <label asp-for="Img" class="control-label"></label>
+                <input asp-for="Img" type="file" class="form-control-file" />
+                <span asp-validation-for="Img" class="text-danger"></span>
+            </div>
             
             <div class="form-group">
                 <label asp-for="AssistanceNeeded" class="control-label">Assistance Needed:</label>
@@ -39,7 +43,11 @@
                 <input asp-for="Time" class="form-control" />
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
-            
+             <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -50,3 +58,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+

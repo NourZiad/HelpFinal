@@ -1,81 +1,130 @@
 ﻿@model List<HelpFinal.Models.ViewModels.RequestViewModel>
-@{
-    ViewData["Title"] = "Index";
-}
+    @{
+        ViewData["Title"] = "Index";
+    }
 
 
+<!-- Event Start -->
+<div class="event">
+    <div class="container">
+        <div class="section-header text-center">
+            <p>Requests</p>
+            <h2>Be ready for our accepted requests!</h2>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-6">
+                    <div class="event-item">
+                        <img src="@Url.Content(item.Request.Img)" alt="Image">
+                        <div class="event-content">
+                            <div class="event-meta">
+                                <p><i class="fa fa-calendar-alt"></i>@item.Request!.Date.ToShortDateString()</p>
+                                <p><i class="far fa-clock"></i>@item.Request.Time.ToString("hh:mm")</p>
+                                <p><i class="fa fa-map-marker-alt"></i>@item.Request.Place</p>
+                            </div>
+                            <div class="event-text">
+                                <h3>@item.User?.Name</h3>
+                                <p>
+                                    @item.User?.DisabilityType
+                                </p>
+                                <p>
+                                    @item.Request.Description
+                                </p>
+                                @if (item.Accepted)
+                                {
+                                    <span class="text-success">Accepted</span><br />
+                                    <form method="post" asp-action="RetractPosts" style="display:inline;">
+                                        <input type="hidden" name="requestId" value="@item.Request.Id" />
+                                        <button type="submit" class="btn btn-danger">Retract</button>
+                                    </form>
 
-<h4>Requests from Disabled Persons</h4>
+                                    <form method="post" asp-action="SendMessage" style="display:inline;">
+                                        <input type="hidden" name="phoneNumber" />
+                                        <input type="hidden" name="message" value="Your message goes here." />
+                                        <button type="submit" class="btn btn-warning">Send Message</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <a asp-action="AcceptPosts" asp-route-id="@item.Request.Id" class="btn btn-success">Accept</a>
 
-@if (Model != null && Model.Count > 0)
-{
-    <table class="table table-bordered">
-        <tr>
-            <th>Name</th>
-            <th>Disability Type</th>
-            <th>Needs</th>
-            <th>Place</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            var request = item.Request;
-            var user = item.User;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
 
-            <tr>
-                <td>@(user?.Name)</td>
-                <td>@(user?.DisabilityType)</td>
-                <td>@(request?.AssistanceNeeded)</td>
-                <td>@(request?.Place)</td>
-                <td>@(request?.Date.ToString("d"))</td>
-                <td>@(request?.Time.ToString("t"))</td>
-                <td>
-                     @if (item.Accepted)
+        </div>
+    </div>
+</div>
+<!-- Event End -->
+
+
+  @*  <h4>Requests from Disabled Persons</h4>
+
+    @if (Model != null && Model.Count > 0)
     {
-        <span class="text-success">Accepted</span>
-        <form method="post" asp-action="RetractPosts">
-            <input type="hidden" name="requestId" value="@request.Id" />
-            <button type="submit" class="btn btn-danger">Retract</button>
-        </form>
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Disability Type</th>
+                <th>Needs</th>
+                <th>Place</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                var request = item.Request;
+                var user = item.User;
+
+                <tr>
+                    <td>@(user?.Name)</td>
+                    <td>@(user?.DisabilityType)</td>
+                    <td>@(request?.AssistanceNeeded)</td>
+                    <td>@(request?.Place)</td>
+                    <td>@(request?.Date.ToString("d"))</td>
+                    <td>@(request?.Time.ToString("t"))</td>
+                    <td>
+                        @if (item.Accepted)
+                        {
+                            <span class="text-success">Accepted</span>
+                            <form method="post" asp-action="RetractPosts">
+                                <input type="hidden" name="requestId" value="@request.Id" />
+                                <button type="submit" class="btn btn-danger">Retract</button>
+                            </form>
+
+                            <form method="post" asp-action="SendMessage">
+                                <input type="hidden" name="phoneNumber" />
+                                <input type="hidden" name="message" value="Your message goes here." />
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-action="AcceptPosts" asp-route-id="@request.Id" class="btn btn-success">Accept</a>
+
+                        }
+                        @* @if (item.Accepted)
+                            {
+                            <span class="text-success">Accepted</span>
+                            }
+                            else
+                            {
+                            <button onclick="showConfirmation(@request.Id)" class="btn btn-success">Accept</button>
+
+                            <a asp-action="AcceptPosts" asp-route-id="@request.Id" class="btn btn-success">Accept</a>
+                            }*@
+                   @* </td>
+
+                </tr>
+            }
+        </table>
     }
     else
     {
-                        <a asp-action="AcceptPosts" asp-route-id="@request.Id" class="btn btn-success">Accept</a>
-
-    }
-                   @* @if (item.Accepted)
-                    {
-                        <span class="text-success">Accepted</span>
-                    }
-                    else
-                    {
-                        <button onclick="showConfirmation(@request.Id)" class="btn btn-success">Accept</button>
-
-                       <a asp-action="AcceptPosts" asp-route-id="@request.Id" class="btn btn-success">Accept</a>
-                   }*@
-                </td>
-
-            </tr>
-        }
-    </table>
-}
-else
-{
-    <p>No requests found.</p>
-}
-<script>
-    function showConfirmation(requestId) {
-        if (confirm("Are you sure you want to accept this request?")) {
-            // If the user confirms, redirect to the AcceptPosts action
-            var url = "/Volunteer/AcceptPosts/" + requestId;
-            window.location.href = url;
-        }
-    }
-</script>
-
-
-
-
-
+        <p>No requests found.</p>
+    }*@

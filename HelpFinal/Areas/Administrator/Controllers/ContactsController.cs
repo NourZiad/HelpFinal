@@ -111,17 +111,14 @@ namespace HelpFinal.Areas.Administrator.Controllers
                     Name = contact.Name,
                     Subject = contact.Subject,
                     Message = contact.Message,
-                    CreationDate = contact.CreationDate,
-                    IsDeleted = contact.IsDeleted,
-                    IsPublished = contact.IsPublished,
-                    UserId = contact.UserId
+                   
 
                 };
                 _context.Contacts.Add(c);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(contact);
+            return Ok();
         }
 
         // GET: Administrator/Contacts/Edit/5

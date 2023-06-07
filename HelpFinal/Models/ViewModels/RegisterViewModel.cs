@@ -9,24 +9,24 @@ namespace HelpFinal.Models.ViewModels
 
         public string? Id { get; set; }
 
-        [Display(Name = "Enter Your ID")]
+        [Display(Name = "ID")]
         public string? StudentId { get; set; }
 
         [Required]
-        [Display(Name = "Enter Your Name")]
+        [Display(Name = " Name")]
         public string? Name { get; set; }
 
         [Required]
-        [Display(Name = "Enter Your Email")]
+        [Display(Name = " Email")]
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
         [Required]
-        [Display(Name = "Enter Your Phone")]
+        [Display(Name = "Phone")]
         public string? Phone { get; set; }
 
         [Required]
-        [Display(Name = "Enter Your Password")]
+        [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
         

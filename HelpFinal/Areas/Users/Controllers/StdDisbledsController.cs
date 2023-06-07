@@ -9,6 +9,8 @@ using HelpFinal.Data;
 using HelpFinal.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Org.BouncyCastle.Bcpg;
+using HelpFinal.Models.ViewModels;
 
 namespace HelpFinal.Areas.Users.Controllers
 {
@@ -16,22 +18,24 @@ namespace HelpFinal.Areas.Users.Controllers
     public class StdDisbledsController : Controller
     {
         private readonly FinalDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public StdDisbledsController(FinalDbContext context)
+
+        public StdDisbledsController(FinalDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        // GET: Users/StdDisbleds
 
         public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
             {
-                // Get the authenticated user's ID
+              
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                // Retrieve the stdDisbled objects for the logged-in user
+                
                 var stdDisbleds = await _context.StdDisbleds
                     .Where(s => s.UserId == userId)
                     .ToListAsync();
@@ -40,21 +44,12 @@ namespace HelpFinal.Areas.Users.Controllers
             }
             else
             {
-                // User is not authenticated, handle accordingly
-                // For example, redirect to login page or display an error message
+               
                 return RedirectToAction("Login", "Account");
             }
         }
 
-        //public async Task<IActionResult> Index()
-        //{
-       
-        //    return _context.StdDisbleds != null ? 
-        //                  View(await _context.StdDisbleds.ToListAsync()) :
-        //                  Problem("Entity set 'FinalDbContext.StdDisbleds'  is null.");
-        //}
-
-        // GET: Users/StdDisbleds/Details/5
+      
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.StdDisbleds == null)
@@ -72,45 +67,59 @@ namespace HelpFinal.Areas.Users.Controllers
             return View(stdDisbled);
         }
 
-        // GET: Users/StdDisbleds/Create
+      
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/StdDisbleds/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( StdDisbled stdDisbled)
+        public async Task<IActionResult> Create( StdDisbledViewModel model)
         {
             if (ModelState.IsValid)
             {
+
                 string studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                // Assign the user ID to the StudentId property
-                stdDisbled.UserId = studentId;
-                _context.StdDisbleds.Add(stdDisbled);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
+                model.UserId = studentId;
+              
+                    string ImgName = UploadFile(model);
+                    StdDisbled std = new StdDisbled
+                    {
+                        Id = model.Id,
+                        AssistanceNeeded = model.AssistanceNeeded,
+                        Time = model.Time,
+                        Date = model.Date,
+                        Description = model.Description,
+                        Place = model.Place,
+                        AcceptedBy = model.AcceptedBy,
+                        UserId = model.UserId,
+                        Img = ImgName
+                    };
+                   
+                    _context.StdDisbleds.Add(std);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(model);
             }
-            return View(stdDisbled);
-        }
+         
+       
+
 
 
 
         public IActionResult AcceptedPosts()
         {
-            var acceptedRequests = _context.StdDisbleds.Where(r => r.AcceptedBy != null).ToList();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var acceptedRequests = _context.StdDisbleds.Where(r => r.AcceptedBy != null && r.UserId == userId ).ToList();
             return View(acceptedRequests);
         }
 
 
-
-
-
-        // GET: Users/StdDisbleds/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.StdDisbleds == null)
@@ -198,6 +207,25 @@ namespace HelpFinal.Areas.Users.Controllers
         private bool StdDisbledExists(int id)
         {
           return (_context.StdDisbleds?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+        public string UploadFile(StdDisbledViewModel model)
+        {
+            string wwwPath = _webHostEnvironment.WebRootPath;
+            if (string.IsNullOrEmpty(wwwPath)) { }
+            string ContentPath = _webHostEnvironment.ContentRootPath;
+            if (string.IsNullOrEmpty(ContentPath)) { }
+            string p = Path.Combine(wwwPath, "Images");
+            if (!Directory.Exists(p))
+            {
+                Directory.CreateDirectory(p);
+            }
+            string fileName = Path.GetFileNameWithoutExtension(model.Img!.FileName);
+            string newImgName = "nextwo_" + fileName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(model.Img.FileName);
+            using (FileStream file = new FileStream(Path.Combine(p, newImgName), FileMode.Create))
+            {
+                model.Img.CopyTo(file);
+            }
+            return "\\Images\\" + newImgName;
         }
     }
 }
